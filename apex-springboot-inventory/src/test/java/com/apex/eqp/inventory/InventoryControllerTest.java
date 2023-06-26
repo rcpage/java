@@ -1,9 +1,14 @@
 package com.apex.eqp.inventory;
 
 import com.apex.eqp.inventory.controllers.InventoryController;
+import com.apex.eqp.inventory.entities.Product;
 import com.apex.eqp.inventory.services.ProductService;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,10 +16,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,29 +32,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RequiredArgsConstructor
 class InventoryControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+        @Autowired
+        private MockMvc mockMvc;
 
-    @InjectMocks
-    InventoryController inventoryController;
+        @InjectMocks
+        InventoryController inventoryController;
 
-    @Mock
-    ProductService productService;
+        @Mock
+        ProductService productService;
 
-    @BeforeEach
-    public void before() {
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(inventoryController)
-                .build();
-    }
+        @BeforeEach
+        public void before() {
+                mockMvc = MockMvcBuilders
+                                .standaloneSetup(inventoryController)
+                                .build();
+        }
 
-    @SneakyThrows
-    @Test
-    void shouldCallController() {
-        mockMvc.perform(
-                get("/api/inventory/product")
-                        .contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(status().isOk());
-    }
-
+        @SneakyThrows
+        @Test
+        void shouldCallController() {
+                mockMvc.perform(get("/api/inventory/product").contentType(MediaType.APPLICATION_JSON))
+                                .andExpect(status().isOk());
+        }
 }

@@ -17,7 +17,9 @@ public class ProductFilter {
     }
 
     public List<Product> removeRecalledFrom(Collection<Product> allProduct) {
-        return allProduct.stream().filter(ProductFilter::filterByName).collect(Collectors.toList());
+        return allProduct.stream().filter(product -> {
+            return !recalledProducts.contains(product.getName());
+        }).collect(Collectors.toList());
     }
 
     private static boolean filterByName(Product product) {

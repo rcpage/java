@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +30,11 @@ public class RecalledProductController {
     @GetMapping("/")
     ResponseEntity<Collection<RecalledProduct>> findRecallProducts() {
         Collection<RecalledProduct> allRecalledProducts = recalledProductService.getAllRecalledProducts();
-
+        // List<RecalledProduct> list = new
+        // ArrayList<RecalledProduct>(allRecalledProducts);
+        // Collections.sort(list, (a, b) -> b.getId().compareTo(a.getId()));
+        // Collections.sort(list, (a,b)-> a.getName().compareTo(b.getName()));
+        // return ResponseEntity.ok(list);
         return ResponseEntity.ok(allRecalledProducts);
     }
 }
